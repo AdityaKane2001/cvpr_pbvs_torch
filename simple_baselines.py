@@ -47,7 +47,7 @@ def parse_args():
 def load_train_data(train_data_path, batch_size):
     # Convert images to tensors, normalize, and resize them
     transform = transforms.Compose(
-        [transforms.Resize(224), transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+        [transforms.Resize(224), transforms.ToTensor(), transforms.Normalize((0, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
     train_data = torchvision.datasets.ImageFolder(root=train_data_path, transform=transform)
     train_data_loader = data.DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=args.num_workers)
@@ -73,7 +73,7 @@ def train():
     device = torch.device("cuda" if torch.cuda.is_available()
                           else "cpu")
 
-    model = models.resnet18(pretrained=False)
+    model = models.resnet18(pretrained=False, num_classes=10)
 
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.fc.parameters(), lr=0.003)
