@@ -48,8 +48,10 @@ def load_train_data(train_data_path, batch_size):
     # Convert images to tensors, normalize, and resize them
     transform = transforms.Compose(
         [transforms.Resize(224), transforms.ToTensor(), transforms.Normalize((0, 0.5, 0.5), (0.5, 0.5, 0.5))])
-
-    train_data = torchvision.datasets.ImageFolder(root=train_data_path, transform=transform)
+    
+    target_transform = lambda target: torch.nn.functional.one_hot(target, num_classes=10)
+    
+    train_data = torchvision.datasets.ImageFolder(root=train_data_path, transform=transform, target_transform=target_transform)
     train_data_loader = data.DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=args.num_workers)
 
     return train_data_loader
