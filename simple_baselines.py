@@ -49,7 +49,7 @@ def load_train_data(train_data_path, batch_size):
     transform = transforms.Compose(
         [transforms.Resize(224), transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
     
-    target_transform = lambda target: torch.nn.functional.one_hot(torch.Tensor(target).to(torch.int64), num_classes=10)
+    target_transform = lambda target: torch.nn.functional.one_hot(torch.tensor(target).to(torch.int64), num_classes=10)
     
     train_data = torchvision.datasets.ImageFolder(root=train_data_path, transform=transform, target_transform=target_transform)
     train_data_loader = data.DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=args.num_workers)
@@ -61,7 +61,7 @@ def load_test_data(test_data_path, batch_size):
     transform = transforms.Compose(
         [transforms.Resize(224), transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
     
-    target_transform = lambda target: torch.nn.functional.one_hot(torch.Tensor(target).to(torch.int64), num_classes=10)
+    target_transform = lambda target: torch.nn.functional.one_hot(torch.tensor(target).to(torch.int64), num_classes=10)
     
     test_data = torchvision.datasets.ImageFolder(root=test_data_path, transform=transform, target_transform=target_transform)
     test_data_loader = data.DataLoader(test_data, batch_size=batch_size, shuffle=True, num_workers=args.num_workers)
